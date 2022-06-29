@@ -13,42 +13,18 @@ function AllStudents() {
     let navigate = useNavigate();
     let [data,setData] = useState([])
     
-      //getting the data
-    // let getData = async ()=>{
-
-    //     await fetch('https://6100fb3b1d56e10017394cbe.mockapi.io/userdetail')
-    //     .then(response => response.json())
-    //     .then(res =>{
-    //       console.log(res)
-    //       setData(res)
-    //     })
-    //     .catch(err=>{
-    //       console.log(err)
-    //     })
-    //   }
+  
 
     // getting data using axios
 let getData =async()=>{
 let res =await axios.get('https://614eacd3b4f6d30017b48344.mockapi.io/user')
 //  .then((res)=>{setData(res.data)})
  setData(res.data)
+ console.log(res.data)
 }
 
 
 
-      //to delete the data
-    //   let handleDelete = async(id)=>{
-    //     await fetch('https://6100fb3b1d56e10017394cbe.mockapi.io/userdetail/'+id,{
-    //         method:'DELETE',
-    //     })
-    //     .then(response =>response.json())
-    //     .then(data=>{
-    //         getData();
-    //     })
-    //     .catch((error)=>{
-    //         console.log(error)
-    //     })
-    // }
 // deleting data using axios
 let handleDelete=async(id)=>{
     await axios.delete('https://614eacd3b4f6d30017b48344.mockapi.io/user/'+id)
@@ -79,11 +55,11 @@ getData();
                             <td>{e.degree}</td>
                             <td>{e.dept}</td>
                             <td>
-                                <button className="btn btn-primary" onClick={()=>{
+                                <button className="btn btn-outline-success" onClick={()=>{
                                     navigate('/edit-student/'+e.id) 
                                 }}>Edit</button>
                                 
-                                 &nbsp;&nbsp; <button className="btn btn-danger" onClick={()=>handleDelete(e.id)}>Delete</button></td>
+                                 &nbsp;&nbsp; <button className="btn btn-outline-danger" onClick={()=>handleDelete(e.id)}>Delete</button></td>
                         </tr>
                     })
                 }

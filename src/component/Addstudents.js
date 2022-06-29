@@ -3,35 +3,12 @@ import React,{useState,useContext,useEffect} from 'react'
 import {useNavigate} from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup'
+import './Allstudents.css'
+
 function AddStudent() {
 
     let navigate = useNavigate();
-    // let [name,setName]=useState("");
-    // let [email,setEmail]=useState("");
-    // let [mobile,setMobile]=useState("");
-    // let [degree,setDegree]=useState("");
-    // let [dept, setDept]=useState("");   
-    // let handleSave = async()=>{       
-    //     await fetch('https://6100fb3b1d56e10017394cbe.mockapi.io/userdetail',{
-    //         method:'POST',
-    //         headers:{
-    //             'Content-Type':'application/json'
-    //         },
-    //         body:JSON.stringify({
-    //             name,
-    //             email,
-    //             mobile,
-    //             degree,
-    //             dept
-    //         })
-    //     })
-    //     .then(response =>response.json())
-    //     .then(data=>console.log(data))
-    //     .catch((error)=>{
-    //         console.log(error)
-    //     })
-    //     navigate('/all-students')
-    // }
+    
  const formik = useFormik({
      initialValues:{
          name:'',
@@ -46,10 +23,10 @@ function AddStudent() {
       
     },validationSchema:yup.object({
          name:yup.string().required('required'),
-         email:yup.string().email('invalid email address').required('required'),
-         mobile:yup.string().matches(/^\d{10}$/,"invalid mobile number ").required('required'),
-         degree:yup.string(),
-         dept:yup.string()
+         email:yup.string().email('Give a valid email guys').required('Tell us your mail ID'),
+         mobile:yup.string().matches(/^\d{10}$/,"Seriously, do you think this is ryt?").required("Tell us your mobile number then how we'll call you").length(10),
+         degree:yup.string().required("Tell us your qualification"),
+         dept:yup.string().required("which department?")
      }),
      
      
@@ -64,8 +41,8 @@ function AddStudent() {
        }
     }
     return (
-        <div className='margin'>
-            <h1>Add Student</h1>
+        <div className='add-student'>
+            <h1 className='add-style'>Add Student</h1>
            <form onSubmit={formik.handleSubmit}>
            <label htmlFor='name'>Name</label>
             <input
@@ -77,9 +54,11 @@ function AddStudent() {
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
                 value={formik.values.name}
+                style={{width:'400px'}}
                             />
 
-         {formik.touched.name && formik.errors.name?(<div style={{color:"red"}}>{formik.errors.name}</div>) : null}  
+         {formik.touched.name && formik.errors.name?(<div style={{color:"red"}}>Necessary,this is how we will call you hereafter</div>) : null}
+         { formik.touched.name && !formik.errors.name?(<div style={{color:"green"}}>Hello {formik.values.name}</div>) : null}  
          <label htmlFor="email">Email</label>
             <input
               id="email"
@@ -90,9 +69,11 @@ function AddStudent() {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
               value={formik.values.email}
+              style={{width:'400px'}}
           
               />
       {formik.touched.email && formik.errors.email ? (<div style={{color:"red"}}>{formik.errors.email}</div>): null}
+      { formik.touched.email && !formik.errors.email?(<div style={{color:"green"}}>Looks good</div>) : null}  
                <label htmlFor="mobile">Mobile</label>
              <input
               id="mobile"
@@ -103,8 +84,10 @@ function AddStudent() {
               value={formik.values.mobile}
               className="form-control"
               placeholder="moblie"
+              style={{width:'400px'}}
               />
-                   {formik.touched.mobile && formik.errors.mobile ? (<div style={{color:"red"}}>{formik.errors.mobile}</div>): null}
+            {formik.touched.mobile && formik.errors.mobile ? (<div style={{color:"red"}}>{formik.errors.mobile}</div>): null}
+            {formik.touched.mobile && !formik.errors.mobile ? (<div style={{color:"green"}}>You got a nice mobile number</div>): null}
               <label htmlFor="degree">Degree</label>
             <input
               id="degree"
@@ -115,8 +98,10 @@ function AddStudent() {
               value={formik.values.degree}
               className="form-control"
               placeholder="degree"
+              style={{width:'400px'}}
               />
-                   {formik.touched.degree && formik.errors.degree ? (<div style={{color:"red"}}>{formik.errors.degree}</div>): null}
+            {formik.touched.degree && formik.errors.degree ? (<div style={{color:"red"}}>{formik.errors.degree}</div>): null}
+            {formik.touched.degree && !formik.errors.degree ? (<div style={{color:"green"}}>you studied {formik.values.degree}</div>): null}
               <label htmlFor="dept">Department</label>
             <input
               id="dept"
@@ -127,37 +112,14 @@ function AddStudent() {
               value={formik.values.department}
               className="form-control"
                placeholder="dept"
+               style={{width:'400px'}}
               />
-                   {formik.touched.dept && formik.errors.dept ? (<div style={{color:"red"}}>{formik.errors.dept}</div>): null},
-     <button type="submit" className="btn btn-primary">Submit</button>
+                   {formik.touched.dept && formik.errors.dept ? (<div style={{color:"red"}}>{formik.errors.dept}</div>): null}
+                   {formik.touched.dept && !formik.errors.dept ? (<div style={{color:"green"}}>wow! Nice department</div>): null}
+     <button type="submit" className="btn btn-success mt-4" >Submit</button>
            </form>
         </div>
     )
 }
 
 export default AddStudent
-{/* <div>
-                <div className="form-group">
-                    <label for="exampleInputPassword1">Name</label>
-                    <input type="text" value={name} class="form-control" onChange={(e)=>setName(e.target.value)} placeholder="Name"/>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" onChange={(e)=>setEmail(e.target.value)} placeholder="Enter email"/>
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div className="form-group">
-                    <label for="exampleInputPassword1">Mobile</label>
-                    <input type="text" class="form-control" onChange={(e)=>setMobile(e.target.value)} placeholder="Mobile"/>
-                </div>
-                <div className="form-group">
-                    <label for="exampleInputPassword1">Degree</label>
-                    <input type="text" class="form-control" onChange={(e)=>setDegree(e.target.value)} placeholder="Degree"/>
-                </div>
-                <div className="form-group">
-                    <label for="exampleInputPassword1">Department</label>
-                    <input type="text" class="form-control" onChange={(e)=>setDept(e.target.value)} placeholder="Department"/>
-                </div>
-                <button className="btn btn-primary" onClick={handleSave}>Submit</button>
-            </div> */}
-    
