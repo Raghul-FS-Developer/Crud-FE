@@ -83,7 +83,7 @@ function AddStudent() {
               onChange={formik.handleChange}
               value={formik.values.mobile}
               className="form-control"
-              placeholder="moblie"
+              placeholder="mobile"
               style={{width:'400px'}}
               />
             {formik.touched.mobile && formik.errors.mobile ? (<div style={{color:"red"}}>{formik.errors.mobile}</div>): null}
